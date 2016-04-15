@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.paas.ipaas.base.dao.interfaces.SequenceMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+    <id column="sequence_name" property="sequenceName" jdbcType="VARCHAR" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="max_value" property="maxValue" jdbcType="INTEGER" />
+    <result column="min_value" property="minValue" jdbcType="INTEGER" />
+    <result column="start_value" property="startValue" jdbcType="INTEGER" />
+    <result column="increament_value" property="increamentValue" jdbcType="INTEGER" />
+    <result column="cache_size" property="cacheSize" jdbcType="INTEGER" />
+    <result column="cycle_flag" property="cycleFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sequence_name, table_name, max_value, min_value, start_value, increament_value, cache_size, 
+    cycle_flag
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sequence
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>=0" >
+      limit #{limitStart} , #{limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sequence
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sequence
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria" >
+    delete from sequence
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+    insert into sequence (sequence_name, table_name, max_value, 
+      min_value, start_value, increament_value, 
+      cache_size, cycle_flag)
+    values (#{sequenceName,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, #{maxValue,jdbcType=INTEGER}, 
+      #{minValue,jdbcType=INTEGER}, #{startValue,jdbcType=INTEGER}, #{increamentValue,jdbcType=INTEGER}, 
+      #{cacheSize,jdbcType=INTEGER}, #{cycleFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+    insert into sequence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sequenceName != null" >
+        sequence_name,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      max_value,
+      min_value,
+      start_value,
+      increament_value,
+      cache_size,
+      <if test="cycleFlag != null" >
+        cycle_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sequenceName != null" >
+        #{sequenceName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      #{maxValue,jdbcType=INTEGER},
+      #{minValue,jdbcType=INTEGER},
+      #{startValue,jdbcType=INTEGER},
+      #{increamentValue,jdbcType=INTEGER},
+      #{cacheSize,jdbcType=INTEGER},
+      <if test="cycleFlag != null" >
+        #{cycleFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria" resultType="java.lang.Integer" >
+    select count(*) from sequence
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sequence
+    <set >
+      <if test="record.sequenceName != null" >
+        sequence_name = #{record.sequenceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tableName != null" >
+        table_name = #{record.tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxValue != null" >
+        max_value = #{record.maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.minValue != null" >
+        min_value = #{record.minValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.startValue != null" >
+        start_value = #{record.startValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.increamentValue != null" >
+        increament_value = #{record.increamentValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.cacheSize != null" >
+        cache_size = #{record.cacheSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycleFlag != null" >
+        cycle_flag = #{record.cycleFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sequence
+    set sequence_name = #{record.sequenceName,jdbcType=VARCHAR},
+      table_name = #{record.tableName,jdbcType=VARCHAR},
+      max_value = #{record.maxValue,jdbcType=INTEGER},
+      min_value = #{record.minValue,jdbcType=INTEGER},
+      start_value = #{record.startValue,jdbcType=INTEGER},
+      increament_value = #{record.increamentValue,jdbcType=INTEGER},
+      cache_size = #{record.cacheSize,jdbcType=INTEGER},
+      cycle_flag = #{record.cycleFlag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+    update sequence
+    <set >
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="maxValue != null" >
+        max_value = #{maxValue,jdbcType=INTEGER},
+      </if>
+      <if test="minValue != null" >
+        min_value = #{minValue,jdbcType=INTEGER},
+      </if>
+      <if test="startValue != null" >
+        start_value = #{startValue,jdbcType=INTEGER},
+      </if>
+      <if test="increamentValue != null" >
+        increament_value = #{increamentValue,jdbcType=INTEGER},
+      </if>
+      <if test="cacheSize != null" >
+        cache_size = #{cacheSize,jdbcType=INTEGER},
+      </if>
+      <if test="cycleFlag != null" >
+        cycle_flag = #{cycleFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+    update sequence
+    set table_name = #{tableName,jdbcType=VARCHAR},
+      max_value = #{maxValue,jdbcType=INTEGER},
+      min_value = #{minValue,jdbcType=INTEGER},
+      start_value = #{startValue,jdbcType=INTEGER},
+      increament_value = #{increamentValue,jdbcType=INTEGER},
+      cache_size = #{cacheSize,jdbcType=INTEGER},
+      cycle_flag = #{cycleFlag,jdbcType=CHAR}
+    where sequence_name = #{sequenceName,jdbcType=VARCHAR}
+  </update>
+</mapper>
