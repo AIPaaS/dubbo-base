@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * 缓存服务 2015-03-12
+ * dubbo启动入口，支持自动扫描配置文件
  */
 public class DubboServiceStart {
 	private static final Logger log = LogManager
@@ -17,19 +17,24 @@ public class DubboServiceStart {
 				new String[] { "classpath*:context/applicationContext-*.xml" });
 		PaaSBeanFactory.context = context;
 		context.registerShutdownHook();
+		context.refresh();
 		context.start();
+		log.info("Got jdbc connection pool type:"+context.getBeanFactory().resolveEmbeddedValue("${jdbc.cnnPoolType}"));
+		log.info("Using HikariCP connection pool:"
+				+ context.getBean("useHikariCP"));
 		log.info("PaaS Dubbo 服务启动完毕---------------------------");
 		while (true) {
 			try {
 				Thread.currentThread();
 				Thread.sleep(3000L);
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.error("Dubbo error", e);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
 		startDubboService();
+		
 	}
 }

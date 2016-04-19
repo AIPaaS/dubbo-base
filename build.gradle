@@ -100,7 +100,6 @@ ext {
 	moduleMode="-SNAPSHOT";
 	//moduleMode="";
 	moduleName="ipaas-base";
-	//moduleVersion="0.3-SNAPSHOT"
 	moduleVersion="0.3"+moduleMode;
     publishUserName = "devadm"
     publishUserPassword = "Devadm@1212"
@@ -112,7 +111,7 @@ ext {
 group = 'com.ai'
 
 dependencies{
-	compile 'com.ai:ipaas-common:0.1-SNAPSHOT'
+	compile 'com.ai:ipaas-common:0.3'
 	
 	compile "org.springframework:spring-tx:4.1.6.RELEASE"
 	compile "org.springframework:spring-jdbc:4.1.6.RELEASE"
@@ -120,9 +119,11 @@ dependencies{
 	compile "org.springframework:spring-context:4.1.6.RELEASE"
 	compile "org.apache.commons:commons-dbcp2:2.1"
 	
-	compile ("com.alibaba:dubbox:2.8.3") {
+	compile ("com.alibaba:dubbox:2.8.4") {
 		exclude group: 'org.springframework', module: 'spring'
 	}
+	//
+	compile "com.zaxxer:HikariCP:2.4.5"
 	//restful jars
 	compile 'org.jboss.resteasy:resteasy-jaxrs:3.0.11.Final'
 	compile 'org.jboss.resteasy:resteasy-client:3.0.11.Final'
@@ -187,6 +188,11 @@ publishing {
             pom.withXml {
 	            asNode().children().last() + {
 	                delegate.dependencies {
+	                    delegate.dependency {
+                                delegate.groupId("com.ai")
+                                delegate.artifactId("ipaas-common")
+                                delegate.version("0.3")
+                        } 
                         delegate.dependency {
                                 delegate.groupId("org.springframework")
                                 delegate.artifactId("spring-tx")
@@ -206,11 +212,16 @@ publishing {
                                 delegate.groupId("org.springframework")
                                 delegate.artifactId("spring-context")
                                 delegate.version("4.1.6.RELEASE")
-                        }  					
+                        }  	
+                        delegate.dependency {
+                                delegate.groupId("com.zaxxer")
+                                delegate.artifactId("HikariCP")
+                                delegate.version("2.4.5")
+                        }  
   						delegate.dependency {
                                 delegate.groupId("com.alibaba")
                                 delegate.artifactId("dubbox")
-                                delegate.version("2.8.3")
+                                delegate.version("2.8.4")
                                 delegate.exclusions{
 			                        	delegate.exclusion{
 			                        		delegate.groupId("org.springframework")

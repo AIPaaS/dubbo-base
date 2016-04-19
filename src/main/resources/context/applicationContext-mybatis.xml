@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:lang="http://www.springframework.org/schema/lang"
-       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        	   http://www.springframework.org/schema/context
     	   http://www.springframework.org/schema/context/spring-context-3.0.xsd
@@ -19,72 +17,87 @@
 	<context:component-scan base-package="com.ai.paas.ipaas" />
 	<!-- 基于环境变量，配置加密机 -->
 	<bean id="environmentVariablesConfiguration" class="com.ai.paas.ipaas.EnvStringPBEConfig">
-	    <property name="algorithm" value="PBEWithMD5AndDES" />
-	    <property name="passwordEnvName" value="APP_PASSWD_SEED"/>
-	    <property name="passwordSysPropertyName" value="APP_PASSWD_SEED"></property>
-	    <property name="password" value="salt" />
-    </bean>
-	
-  	<!-- 配置加密器，将用于解密 -->
-  	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
-    	<property name="config" ref="environmentVariablesConfiguration" />
-  	</bean>	
-  	
-  	<!-- 外部属性文件配置 -->
- 	<bean id="propertyConfigurer"  class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
-	    <constructor-arg ref="configurationEncryptor" />
-	    <property name="locations">
-	      <list>
-	        <value>classpath:context/jdbc.properties</value>
-	      </list>
-	    </property>
-    </bean>
-  
-  <!-- 
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:context/jdbc.properties</value>
-            </list>
-        </property>
-    </bean>
- -->
-    <!--  配置数据源 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="maxTotal" value="${jdbc.maxTotal}"/>
-        <property name="maxIdle" value="${jdbc.maxIdle}"/>
-        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"/>
-        <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}"/>
-    </bean>
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="passwordEnvName" value="APP_PASSWD_SEED" />
+		<property name="passwordSysPropertyName" value="APP_PASSWD_SEED"></property>
+		<property name="password" value="PaaSSalt" />
+	</bean>
 
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:mybatis/mapper/**/*.xml" />
-    </bean>
+	<!-- 配置加密器，将用于解密 -->
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariablesConfiguration" />
+	</bean>
+
+	<!-- 外部属性文件配置 -->
+	<bean id="propertyConfigurer"
+		class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
+		<property name="locations">
+			<list>
+				<value>classpath:context/jdbc.properties</value>
+			</list>
+		</property>
+		<property name="properties">  
+		    <props>  
+		      <prop key="jdbc.cnnPoolType">hikari</prop>  
+		    </props>  
+  		</property> 
+	</bean>
+	<bean id="useHikariCP" class="java.lang.Boolean">
+		<constructor-arg value="#{'${jdbc.cnnPoolType}'!='dbcp'?true:false}" />
+	</bean>
+	<!-- 配置数据源 -->
+	<bean id="dbcp-dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxTotal" value="${jdbc.maxTotal}" />
+		<property name="maxIdle" value="${jdbc.maxIdle}" />
+		<property name="maxWaitMillis" value="${jdbc.maxWaitMillis}" />
+		<property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+	</bean>
+
+	<!-- 配置数据源 -->
+	<bean id="hikari-dataSource" class="com.zaxxer.hikari.HikariDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maximumPoolSize" value="${jdbc.maxTotal}" />
+		<property name="minimumIdle" value="${jdbc.maxIdle}" />
+		<property name="maxLifetime" value="${jdbc.maxWaitMillis}" />
+		<property name="autoCommit" value="${jdbc.defaultAutoCommit}" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource"
+			ref="#{ useHikariCP ? 'hikari-dataSource' : 'dbcp-dataSource' }" />
+		<property name="mapperLocations" value="classpath*:mybatis/mapper/**/*.xml" />
+	</bean>
 	<mybatis:scan base-package="com.ai.paas.ipaas.**.dao" />
-	
-    <!-- 配置SqlSessionTemplate -->
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
-    </bean>
 
-    <!-- 事务配置 -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+	<!-- 配置SqlSessionTemplate -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 
-    <!-- 使用annotation注解方式配置事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+	<!-- 事务配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource"
+			ref="#{ useHikariCP ? 'hikari-dataSource' : 'dbcp-dataSource' }" />
+	</bean>
 
-    <!--AOP 事务配置-->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*" propagation="REQUIRED"/>
-        </tx:attributes>
-    </tx:advice>
+	<!-- 使用annotation注解方式配置事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<!--AOP 事务配置 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
 
 </beans>
