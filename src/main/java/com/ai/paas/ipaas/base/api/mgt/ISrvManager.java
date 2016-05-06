@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.rest.manage;
+package com.ai.paas.ipaas.base.api.mgt;
 
 public interface ISrvManager {
 	/**

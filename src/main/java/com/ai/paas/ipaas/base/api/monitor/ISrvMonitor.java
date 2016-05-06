@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.rest.monitor;
+package com.ai.paas.ipaas.base.api.monitor;
 
 
 /**

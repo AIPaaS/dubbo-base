@@ -6,14 +6,18 @@
         </Console>
     </appenders>
     <loggers>
-        <root level="trace">
+        <root level="debug">
             <appender-ref ref="Console"/>
         </root>
         <logger name="com.ai" level="DEBUG" additivity="false">
             <appender-ref ref="Console"/>
         </logger>
-        <logger name="org.spring" level="INFO" additivity="false">
+        <logger name="org.spring" level="DEBUG" additivity="false">
             <appender-ref ref="Console"/>
         </logger>
+        <logger name="com.zaxxer.hikari" level="warn" additivity="false">
+            <appender-ref ref="Console"/>
+        </logger>        
+        
     </loggers>
 </configuration>

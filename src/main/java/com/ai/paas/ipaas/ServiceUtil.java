@@ -6,18 +6,18 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ai.paas.ipaas.base.manager.ISequenceManageSv;
+import com.ai.paas.ipaas.base.service.ISequenceSv;
 
 @Component
 public class ServiceUtil {
 	private static SqlSessionTemplate template;
 
-	private static ISequenceManageSv seqSv;
+	private static ISequenceSv seqSv;
 	@Autowired
 	private SqlSessionTemplate annoTemplate;
 
 	@Autowired
-	private ISequenceManageSv annoSeqSv;
+	private ISequenceSv annoSeqSv;
 
 	@PostConstruct
 	public void init() {
@@ -29,7 +29,11 @@ public class ServiceUtil {
 		return template.getMapper(clazz);
 	}
 
-	public static int nextVal(String seqName) {
+	public static long nextVal(String seqName) {
 		return seqSv.nextVal(seqName);
+	}
+
+	public static void main(String[] args) {
+		System.out.println(ServiceUtil.nextVal("cust_id"));
 	}
 }

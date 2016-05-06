@@ -1,7 +1,13 @@
-package com.ai.paas.ipaas.rest.vo;
+package com.ai.paas.ipaas.base.api.vo;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BaseInfo implements Serializable {
 	/**
 	 * 

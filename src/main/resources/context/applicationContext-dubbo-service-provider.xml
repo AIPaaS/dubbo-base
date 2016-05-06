@@ -19,9 +19,11 @@
 	<dubbo:application name="${paas.dubbo.appname}" />
 	<dubbo:registry protocol="${paas.dubbo.registry.protocol}"
 		address="${paas.dubbo.registry.address}" file="${paas.dubbo.registry.file}" />
-	<dubbo:protocol name="${paas.dubbo.protocol}" server="${paas.dubbo.protocol.server}" port="${paas.dubbo.protocol.port}" contextpath="${paas.dubbo.protocol.contextpath}"/>
-	<dubbo:provider timeout="${paas.dubbo.provider.timeout}"
+	<dubbo:protocol name="${paas.dubbo.protocol}" server="${paas.dubbo.protocol.server}" port="${paas.dubbo.protocol.port}" 
+		contextpath="${paas.dubbo.protocol.contextpath}" threads="500" accepts="500"
+		extension="com.ai.paas.ipaas.dubbo.mapper.RestExceptionMapper,com.ai.paas.ipaas.dubbo.mapper.RpcExceptionMapper"/>
+	<dubbo:provider timeout="${paas.dubbo.provider.timeout}" filter="RequestTracker"
 		retries="2" threads="1000" />
 		
-	<dubbo:annotation package="com.ai.paas.ipaas" />	
+	<dubbo:annotation package="com.ai.paas" />	
 </beans>
