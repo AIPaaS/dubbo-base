@@ -8,3 +8,5 @@ reports/*/*
 /build/
 /bin/
 /reports/
+/dubbo-registry.dat
+/dubbo-registry.dat.lock

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context
+    	   	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+           	http://www.springframework.org/schema/tx
+     	   	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+
+           	http://www.springframework.org/schema/lang 
+           	http://www.springframework.org/schema/lang/spring-lang.xsd
+			http://code.alibabatech.com/schema/dubbo
+			http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+
+    <bean id="dubboConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations" value="classpath:dubbo/dubbo.properties"/>
+    </bean>
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="${default.dubbo.appname}"/>
+    <dubbo:registry protocol="${default.dubbo.registry.protocol}"
+                    address="${default.dubbo.registry.address}"/>
+    <dubbo:consumer retries="2"/>
+	
+	<context:component-scan base-package="com.ai.dubbo" />
+	<dubbo:reference interface="com.ai.paas.ipaas.base.api.seq.ISequenceRPC" id="seqRPC"/>
+</beans>
