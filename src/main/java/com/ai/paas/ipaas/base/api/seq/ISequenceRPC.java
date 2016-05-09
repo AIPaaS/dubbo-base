@@ -14,7 +14,7 @@ import com.ai.paas.ipaas.base.api.vo.SequenceInfo;
 @Path("seq")
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_XML })
-public interface ISequenceRPCService {
+public interface ISequenceRPC {
 
 	/**
 	 * 获取下一个序列值
@@ -22,8 +22,7 @@ public interface ISequenceRPCService {
 	 * @param sequenceName
 	 * @return
 	 */
-	@Path("get")
-	@POST
+	@Path("get/{seqName}")
 	@GET
 	public Long nextVal(@PathParam("seqName") @NotNull String sequenceName);
 

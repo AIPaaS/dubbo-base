@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.ai.paas.ipaas.base.api.seq.ISequenceRPCService;
+import com.ai.paas.ipaas.base.api.seq.ISequenceRPC;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -17,7 +17,7 @@ public class SequenceInfo implements Serializable{
 	 */
 	private static final long serialVersionUID = -5601241844355400893L;
 
-	@NotNull(message = "序列名称不能为空", groups = { ISequenceRPCService.CreateSequence.class })
+	@NotNull(message = "序列名称不能为空", groups = { ISequenceRPC.CreateSequence.class })
 	private String sequenceName;
 
     private String tableName;
