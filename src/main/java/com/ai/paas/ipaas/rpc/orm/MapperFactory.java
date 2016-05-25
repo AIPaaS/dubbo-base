@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.base.orm;
+package com.ai.paas.ipaas.rpc.orm;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

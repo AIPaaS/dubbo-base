@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.base.dao.mapper.bo;
+package com.ai.paas.ipaas.seq.dao.mapper.bo;
 
 import java.util.ArrayList;
 import java.util.List;

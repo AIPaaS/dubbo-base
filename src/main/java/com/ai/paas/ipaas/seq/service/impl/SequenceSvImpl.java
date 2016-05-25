@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.base.service.impl;
+package com.ai.paas.ipaas.seq.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ai.paas.ipaas.ServiceUtil;
-import com.ai.paas.ipaas.base.dao.interfaces.SequenceMapper;
-import com.ai.paas.ipaas.base.dao.mapper.bo.Sequence;
-import com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria;
-import com.ai.paas.ipaas.base.service.ISequenceSv;
+import com.ai.paas.ipaas.seq.dao.interfaces.SequenceMapper;
+import com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence;
+import com.ai.paas.ipaas.seq.dao.mapper.bo.SequenceCriteria;
+import com.ai.paas.ipaas.seq.service.ISequenceSv;
 import com.ai.paas.ipaas.util.StringUtil;
 
 @Service

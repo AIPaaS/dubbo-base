@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.base.api.seq;
+package com.ai.paas.ipaas.rpc.api.seq;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -9,7 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.ai.paas.ipaas.base.api.vo.SequenceInfo;
+import com.ai.paas.ipaas.rpc.api.vo.SequenceInfo;
 
 @Path("seq")
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED })

@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.base.api.vo;
+package com.ai.paas.ipaas.rpc.api.vo;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.ai.paas.ipaas.base.api.seq.ISequenceRPC;
+import com.ai.paas.ipaas.rpc.api.seq.ISequenceRPC;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

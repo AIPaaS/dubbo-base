@@ -1,9 +1,11 @@
-package com.ai.paas.ipaas.base.service;
+package com.ai.paas.ipaas.seq.service;
 
 import java.util.List;
 
 
-import com.ai.paas.ipaas.base.dao.mapper.bo.Sequence;
+
+
+import com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence;
 
 public interface ISequenceSv {
 
