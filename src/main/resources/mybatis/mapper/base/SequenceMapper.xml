@@ -73,7 +73,7 @@
     sequence_name, table_name, max_value, min_value, start_value, increament_value, cache_size, 
     cycle_flag
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.SequenceCriteria" >
     select
     <if test="distinct" >
       distinct
@@ -100,13 +100,13 @@
     delete from sequence
     where sequence_name = #{sequenceName,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria" >
+  <delete id="deleteByExample" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.SequenceCriteria" >
     delete from sequence
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+  <insert id="insert" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence" >
     insert into sequence (sequence_name, table_name, max_value, 
       min_value, start_value, increament_value, 
       cache_size, cycle_flag)
@@ -114,7 +114,7 @@
       #{minValue,jdbcType=INTEGER}, #{startValue,jdbcType=INTEGER}, #{increamentValue,jdbcType=INTEGER}, 
       #{cacheSize,jdbcType=INTEGER}, #{cycleFlag,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+  <insert id="insertSelective" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence" >
     insert into sequence
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sequenceName != null" >
@@ -149,7 +149,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.SequenceCriteria" resultType="java.lang.Integer" >
     select count(*) from sequence
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -201,7 +201,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence" >
     update sequence
     <set >
       <if test="tableName != null" >
@@ -228,7 +228,7 @@
     </set>
     where sequence_name = #{sequenceName,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.paas.ipaas.base.dao.mapper.bo.Sequence" >
+  <update id="updateByPrimaryKey" parameterType="com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence" >
     update sequence
     set table_name = #{tableName,jdbcType=VARCHAR},
       max_value = #{maxValue,jdbcType=INTEGER},

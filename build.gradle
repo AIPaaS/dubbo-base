@@ -100,8 +100,8 @@ sourceSets {
 }
 
 ext {
-	//moduleMode="-SNAPSHOT";
-	moduleMode="";
+	moduleMode="-SNAPSHOT";
+	//moduleMode="";
 	moduleName="ipaas-base";
 	moduleVersion="0.3"+moduleMode;
     publishUserName = "devadm"
