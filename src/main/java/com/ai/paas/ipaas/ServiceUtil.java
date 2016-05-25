@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ai.paas.ipaas.base.service.ISequenceSv;
+import com.ai.paas.ipaas.seq.service.ISequenceSv;
 
 @Component
 public class ServiceUtil {

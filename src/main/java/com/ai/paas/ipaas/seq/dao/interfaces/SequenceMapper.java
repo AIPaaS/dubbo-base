@@ -1,11 +1,11 @@
-package com.ai.paas.ipaas.base.dao.interfaces;
+package com.ai.paas.ipaas.seq.dao.interfaces;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.ai.paas.ipaas.base.dao.mapper.bo.Sequence;
-import com.ai.paas.ipaas.base.dao.mapper.bo.SequenceCriteria;
+import com.ai.paas.ipaas.seq.dao.mapper.bo.Sequence;
+import com.ai.paas.ipaas.seq.dao.mapper.bo.SequenceCriteria;
 
 public interface SequenceMapper {
 	int countByExample(SequenceCriteria example);

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
 
-import com.ai.paas.ipaas.base.api.vo.BaseResult;
+import com.ai.paas.ipaas.rpc.api.vo.BaseResult;
 
 
 @XmlRootElement

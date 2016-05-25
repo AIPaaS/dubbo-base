@@ -1,4 +1,4 @@
-package com.ai.paas.ipaas.base.api.vo;
+package com.ai.paas.ipaas.rpc.api.vo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
