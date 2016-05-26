@@ -59,7 +59,7 @@
 	</bean>
 
 	<!-- 配置数据源 -->
-	<bean id="hikari-dataSource" class="com.zaxxer.hikari.HikariDataSource">
+	<bean id="hikari-dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
