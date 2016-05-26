@@ -14,7 +14,7 @@
            http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
            http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
-	<context:component-scan base-package="com.ai.paas.ipaas" />
+	<context:component-scan base-package="com.ai.paas" />
 	<!-- 基于环境变量，配置加密机 -->
 	<bean id="environmentVariablesConfiguration" class="com.ai.paas.ipaas.EnvStringPBEConfig">
 		<property name="algorithm" value="PBEWithMD5AndDES" />
@@ -59,17 +59,26 @@
 	</bean>
 
 	<!-- 配置数据源 -->
-	<bean id="hikari-dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="maximumPoolSize" value="${jdbc.maxTotal}" />
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	    <property name="poolName" value="${jdbc.poolName}" />
+	    <property name="connectionTestQuery" value="SELECT 1" />
+	    <property name="dataSourceClassName"       value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+	    <property name="autoCommit" value="${jdbc.defaultAutoCommit}" />
+	    <property name="maximumPoolSize" value="${jdbc.maxTotal}" />
 		<property name="minimumIdle" value="${jdbc.maxIdle}" />
 		<property name="maxLifetime" value="${jdbc.maxWaitMillis}" />
-		<property name="autoCommit" value="${jdbc.defaultAutoCommit}" />
+	    <property name="dataSourceProperties">
+	        <props>
+	            <prop key="url">${jdbc.url}</prop>
+	            <prop key="user">${jdbc.username}</prop>
+	            <prop key="password">${jdbc.password}</prop>
+	        </props>
+	    </property>
 	</bean>
-
+	<bean id="hikari-dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    	<constructor-arg ref="hikariConfig" />
+	</bean>
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource"
 			ref="#{ useHikariCP ? 'hikari-dataSource' : 'dbcp-dataSource' }" />

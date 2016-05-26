@@ -17,7 +17,6 @@ public class DubboServiceStart {
 				new String[] { "classpath*:context/applicationContext-*.xml" });
 		PaaSBeanFactory.context = context;
 		context.registerShutdownHook();
-		context.refresh();
 		context.start();
 		log.info("Got jdbc connection pool type:"+context.getBeanFactory().resolveEmbeddedValue("${jdbc.cnnPoolType}"));
 		log.info("Using HikariCP connection pool:"
