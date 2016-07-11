@@ -6,9 +6,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.ai.dubbo.ext.vo.BaseInfo;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BaseInfo implements Serializable {
+public class ApplyInfo extends BaseInfo implements Serializable {
 	/**
 	 * 
 	 */

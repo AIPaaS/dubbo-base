@@ -29,8 +29,7 @@
     <dubbo:application name="${default.dubbo.appname}"/>
     <dubbo:registry protocol="${default.dubbo.registry.protocol}"
                     address="${default.dubbo.registry.address}"/>
-    <dubbo:consumer retries="2"/>
-	
+    <dubbo:consumer retries="2" filter="ExceptionConverter"/>
 	<context:component-scan base-package="com.ai.dubbo" />
-	<dubbo:reference interface="com.ai.paas.ipaas.base.api.seq.ISequenceRPC" id="seqRPC"/>
+	<dubbo:reference interface="com.ai.paas.ipaas.rpc.api.seq.ISequenceRPC" id="seqRPC"/>
 </beans>

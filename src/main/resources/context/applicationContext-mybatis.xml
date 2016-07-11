@@ -40,6 +40,7 @@
 		<property name="properties">  
 		    <props>  
 		      <prop key="jdbc.cnnPoolType">hikari</prop>  
+		      <prop key="jdbc.poolName">cnnPool</prop>  
 		    </props>  
   		</property> 
 	</bean>

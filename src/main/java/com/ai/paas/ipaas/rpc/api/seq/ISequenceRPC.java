@@ -9,6 +9,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.ai.paas.ipaas.rpc.api.vo.ApplyInfo;
+import com.ai.paas.ipaas.rpc.api.vo.ApplyResult;
 import com.ai.paas.ipaas.rpc.api.vo.SequenceInfo;
 
 @Path("seq")
@@ -32,8 +34,18 @@ public interface ISequenceRPC {
 	 * @param seq
 	 */
 
-	@interface CreateSequence {}
+	@interface CreateSequence {
+	}
+
 	@Path("add")
 	@POST
 	public void createSequence(SequenceInfo seq);
+
+	/**
+	 * @param info
+	 * @return
+	 */
+	@Path("test")
+	@POST
+	public ApplyResult getSeq(ApplyInfo info);
 }
