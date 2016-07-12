@@ -101,8 +101,8 @@ sourceSets {
 }
 
 ext {
-	//moduleMode="-SNAPSHOT";
-	moduleMode="";
+	moduleMode="-SNAPSHOT";
+	//moduleMode="";
 	moduleName="ipaas-base";
 	moduleVersion="0.3"+moduleMode;
     publishUserName = "devadm"
@@ -191,6 +191,12 @@ publishing {
                                 delegate.artifactId("ipaas-common")
                                 delegate.version("0.3")
                         } 
+                        delegate.dependency {
+                                delegate.groupId("com.ai")
+                                delegate.artifactId("dubbo-ext")
+                                delegate.version("0.3")
+                        }
+                        
                         delegate.dependency {
                                 delegate.groupId("org.springframework")
                                 delegate.artifactId("spring-tx")
