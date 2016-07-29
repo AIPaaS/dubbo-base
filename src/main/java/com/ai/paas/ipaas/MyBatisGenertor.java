@@ -179,7 +179,7 @@ public class MyBatisGenertor {
 		if (StringUtil.isBlank(tablenameParam)
 				|| StringUtil.isBlank(moduleParam)) {
 			System.out
-					.println("MyBatisGenertor -DtableName=xxx -DmoduleName=config");
+					.println("MyBatisGenertor -DtableName=xxx -DmoduleName=config -DbasePackage=xxx");
 			System.exit(-1);
 		}
 
