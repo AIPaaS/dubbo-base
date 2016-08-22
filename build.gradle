@@ -9,7 +9,6 @@ compileJava.dependsOn clean
 
 sourceCompatibility = 1.7
 
-
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
@@ -101,8 +100,8 @@ sourceSets {
 }
 
 ext {
-	moduleMode="-SNAPSHOT";
-	//moduleMode="";
+	//moduleMode="-SNAPSHOT";
+	moduleMode="";
 	moduleName="ipaas-base";
 	moduleVersion="0.3"+moduleMode;
     publishUserName = "devadm"
@@ -165,6 +164,32 @@ jar {
     }
 }
 
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	baseName moduleName
+    version moduleVersion
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	baseName moduleName
+    version moduleVersion
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+
 task tar(dependsOn: jar,type: Tar) { 
     from(project.file('build/libs')) { 
 	exclude '.setting' 
@@ -178,6 +203,16 @@ publish.dependsOn build
 
 publishing {
     publications {
+     mavenJar(MavenPublication) {
+        	groupId group
+        	artifactId "${moduleName}"
+            artifact sourcesJar
+            version moduleVersion
+             pom.withXml {
+	            asNode().children().last() 
+                        
+	        }
+        }	
        publishing.publications.create("${moduleName}", MavenPublication) {
             groupId group
             artifactId moduleName
