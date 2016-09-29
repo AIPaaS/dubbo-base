@@ -84,7 +84,7 @@ pmdTest {
     }
 }
 
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
 repositories {
     maven{ url "http://10.1.228.199:18081/nexus/content/groups/public/"  }
@@ -100,10 +100,12 @@ sourceSets {
 }
 
 ext {
-	//moduleMode="-SNAPSHOT";
-	moduleMode="";
+	moduleVersion = version != "unspecified"?version:'0.3'
+	moduleMode = project.hasProperty('mode') ? project.getProperty('mode') : 'R'
+	if(moduleMode == 'S'){
+		moduleVersion = moduleVersion + "-SNAPSHOT";
+	}
 	moduleName="ipaas-base";
-	moduleVersion="0.3"+moduleMode;
     publishUserName = "devadm"
     publishUserPassword = "Devadm@1212"
 	publishSnapShotsURL="http://10.1.228.199:18081/nexus/content/repositories/snapshots/"
@@ -172,21 +174,10 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	baseName moduleName
-    version moduleVersion
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+
 
 artifacts {
     archives sourcesJar
-    archives javadocJar
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
 }
 
 
@@ -203,16 +194,166 @@ publish.dependsOn build
 
 publishing {
     publications {
-     mavenJar(MavenPublication) {
+     	mavenJar(MavenPublication) {
         	groupId group
         	artifactId "${moduleName}"
             artifact sourcesJar
             version moduleVersion
              pom.withXml {
-	            asNode().children().last() 
+	            asNode().children().last() + {
+	                delegate.dependencies {
+	                    delegate.dependency {
+                                delegate.groupId("com.ai")
+                                delegate.artifactId("ipaas-common")
+                                delegate.version("0.3")
+                        } 
+                        delegate.dependency {
+                                delegate.groupId("com.ai")
+                                delegate.artifactId("dubbo-ext")
+                                delegate.version("0.3")
+                        }
                         
+                        delegate.dependency {
+                                delegate.groupId("org.springframework")
+                                delegate.artifactId("spring-tx")
+                                delegate.version("4.1.6.RELEASE")
+                        } 
+  						delegate.dependency {
+                                delegate.groupId("org.springframework")
+                                delegate.artifactId("spring-jdbc")
+                                delegate.version("4.1.6.RELEASE")
+                        }     
+                    	delegate.dependency {
+                                delegate.groupId("org.springframework")
+                                delegate.artifactId("spring-core")
+                                delegate.version("4.1.6.RELEASE")
+                        }   
+                    	delegate.dependency {
+                                delegate.groupId("org.springframework")
+                                delegate.artifactId("spring-context")
+                                delegate.version("4.1.6.RELEASE")
+                        }  	
+                        delegate.dependency {
+                                delegate.groupId("com.zaxxer")
+                                delegate.artifactId("HikariCP")
+                                delegate.version("2.4.5")
+                        }  
+  						delegate.dependency {
+                                delegate.groupId("com.alibaba")
+                                delegate.artifactId("dubbox")
+                                delegate.version("2.8.4")
+                                delegate.exclusions{
+			                        	delegate.exclusion{
+			                        		delegate.groupId("org.springframework")
+			                        		delegate.artifactId("spring")
+			                        	}
+	                        	}                                
+                        }  
+                    	delegate.dependency {
+                                delegate.groupId("org.jboss.resteasy")
+                                delegate.artifactId("resteasy-jaxrs")
+                                delegate.version("3.0.11.Final")
+                        }    
+                    	delegate.dependency {
+                                delegate.groupId("org.jboss.resteasy")
+                                delegate.artifactId("resteasy-client")
+                                delegate.version("3.0.11.Final")
+                        } 
+                    	delegate.dependency {
+                                delegate.groupId("org.jboss.resteasy")
+                                delegate.artifactId("resteasy-jackson-provider")
+                                delegate.version("3.0.11.Final")
+                        }                        
+                    	delegate.dependency {
+                                delegate.groupId("org.apache.tomcat.embed")
+                                delegate.artifactId("tomcat-embed-core")
+                                delegate.version("8.0.21")
+                        }   
+                    	delegate.dependency {
+                                delegate.groupId("org.apache.tomcat.embed")
+                                delegate.artifactId("tomcat-embed-logging-juli")
+                                delegate.version("8.0.21")
+                        }        
+                    	delegate.dependency {
+                                delegate.groupId("javax.validation")
+                                delegate.artifactId("validation-api")
+                                delegate.version("1.1.0.Final")
+                        }                                                                                                                
+ 						delegate.dependency {
+                                delegate.groupId("org.javassist")
+                                delegate.artifactId("javassist")
+                                delegate.version("3.15.0-GA")
+                                delegate.exclusions{
+			                        	delegate.exclusion{
+			                        		delegate.groupId("org.springframework")
+			                        		delegate.artifactId("spring")
+			                        	}
+	                        	}                                
+                        }                          
+  						delegate.dependency {
+                                delegate.groupId("com.101tec")
+                                delegate.artifactId("zkclient")
+                                delegate.version("0.5")
+                                delegate.exclusions{
+			                        	delegate.exclusion{
+			                        		delegate.groupId("org.apache.zookeeper")
+			                        		delegate.artifactId("zookeeper")
+			                        	}
+			                        	delegate.exclusion{
+			                        		delegate.groupId("log4j")
+			                        		delegate.artifactId("log4j")
+			                        	}			                        	
+	                        	} 
+                        }     
+  						delegate.dependency {
+                                delegate.groupId("org.apache.zookeeper")
+                                delegate.artifactId("zookeeper")
+                                delegate.version("3.4.6")
+                        }                                                                        
+  						delegate.dependency {
+                                delegate.groupId("org.apache.commons")
+                                delegate.artifactId("commons-dbcp2")
+                                delegate.version("2.1")
+                        }                                                                 
+                    	delegate.dependency {
+                                delegate.groupId("org.mybatis")
+                                delegate.artifactId("mybatis")
+                                delegate.version("3.1.1")
+                        }
+                        delegate.dependency {
+                            delegate.groupId("org.mybatis")
+                            delegate.artifactId("mybatis-spring")
+                            delegate.version("1.2.0")
+                        }
+                        delegate.dependency {
+                                delegate.groupId("org.mybatis.generator")
+                                delegate.artifactId("mybatis-generator-core")
+                                delegate.version("1.3.2")
+                        }
+                        delegate.dependency {
+                            delegate.groupId("org.mybatis.generator")
+                            delegate.artifactId("mybatis-generator-plugin")
+                            delegate.version("1.0-SNAPSHOT")
+                        }
+                        delegate.dependency {
+							delegate.groupId("mysql")
+							delegate.artifactId("mysql-connector-java")
+							delegate.version("5.1.34")
+						}
+						delegate.dependency {
+							delegate.groupId("org.jasypt")
+							delegate.artifactId("jasypt")
+							delegate.version("1.9.2")
+						}
+						delegate.dependency {
+							delegate.groupId("org.jasypt")
+							delegate.artifactId("jasypt-spring31")
+							delegate.version("1.9.2")
+						}
+                     }
+                 }
 	        }
-        }	
+       }	
        publishing.publications.create("${moduleName}", MavenPublication) {
             groupId group
             artifactId moduleName
