@@ -9,6 +9,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.resteasy.annotations.GZIP;
+
 import com.ai.paas.ipaas.rpc.api.vo.ApplyInfo;
 import com.ai.paas.ipaas.rpc.api.vo.ApplyResult;
 import com.ai.paas.ipaas.rpc.api.vo.SequenceInfo;
@@ -26,6 +28,7 @@ public interface ISequenceRPC {
 	 */
 	@Path("get/{seqName}")
 	@GET
+	@GZIP
 	public Long nextVal(@PathParam("seqName") @NotNull String sequenceName);
 
 	/**

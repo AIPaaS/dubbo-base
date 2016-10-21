@@ -13,7 +13,9 @@
 
            http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
            http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
-
+	<!-- 基于环境变量，配置加密机 -->
+	<import resource="classpath:i18n/context/spring-locale.xml"/>
+	
 	<context:component-scan base-package="com.ai.paas" />
 	<!-- 基于环境变量，配置加密机 -->
 	<bean id="environmentVariablesConfiguration" class="com.ai.paas.ipaas.EnvStringPBEConfig">

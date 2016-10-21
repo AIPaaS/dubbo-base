@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ai.exception.BusinessException;
+import com.ai.paas.ipaas.i18n.ResBundle;
 import com.ai.paas.ipaas.rpc.api.seq.ISequenceRPC;
 import com.ai.paas.ipaas.rpc.api.vo.ApplyInfo;
 import com.ai.paas.ipaas.rpc.api.vo.ApplyResult;
@@ -20,6 +20,9 @@ public class SequenceRPCImpl implements ISequenceRPC {
 			.getLogger(SequenceRPCImpl.class.getName());
 	@Autowired
 	private ISequenceSv sequeceSV;
+
+	@Autowired
+	ResBundle rb;
 
 	@Override
 	public Long nextVal(String sequenceName) {
@@ -38,7 +41,7 @@ public class SequenceRPCImpl implements ISequenceRPC {
 
 	@Override
 	public ApplyResult getSeq(ApplyInfo info) {
-		throw new BusinessException("999999", "这是一个测试");
+		return new ApplyResult("000000", rb.getMessage("ipaas.apply.sucess"));
 	}
 
 }
