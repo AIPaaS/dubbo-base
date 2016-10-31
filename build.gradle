@@ -116,7 +116,7 @@ ext {
 group = 'com.ai'
 
 dependencies{
-	compile 'com.ai:ipaas-common:0.3'
+	compile 'com.ai:ipaas-common:0.3.1'
 	compile 'com.ai:dubbo-ext:0.3.1'
 	compile "com.ai:ipaas-i18n-spring:0.3.1"
 	
@@ -147,7 +147,6 @@ dependencies{
     compile ('org.mybatis.generator:mybatis-generator-core:1.3.2'){
         exclude group: 'log4j' , module: 'log4j'
     }
-    compile 'org.mybatis.generator:mybatis-generator-plugin:1.0-SNAPSHOT'
     //encrpyt tool
     compile 'org.jasypt:jasypt:1.9.2'
     compile 'org.jasypt:jasypt-spring31:1.9.2'
@@ -207,12 +206,12 @@ publishing {
 	                    delegate.dependency {
                                 delegate.groupId("com.ai")
                                 delegate.artifactId("ipaas-common")
-                                delegate.version("0.3")
+                                delegate.version("0.3.1")
                         } 
                         delegate.dependency {
                                 delegate.groupId("com.ai")
                                 delegate.artifactId("dubbo-ext")
-                                delegate.version("0.3")
+                                delegate.version("0.3.1")
                         }
                         
                         delegate.dependency {
@@ -367,12 +366,12 @@ publishing {
 	                    delegate.dependency {
                                 delegate.groupId("com.ai")
                                 delegate.artifactId("ipaas-common")
-                                delegate.version("0.3")
+                                delegate.version("0.3.1")
                         } 
                         delegate.dependency {
                                 delegate.groupId("com.ai")
                                 delegate.artifactId("dubbo-ext")
-                                delegate.version("0.3")
+                                delegate.version("0.3.1")
                         }
                         
                         delegate.dependency {

@@ -86,6 +86,7 @@
 		<property name="dataSource"
 			ref="#{ useHikariCP ? 'hikari-dataSource' : 'dbcp-dataSource' }" />
 		<property name="mapperLocations" value="classpath*:mybatis/mapper/**/*.xml" />
+    	<property name="typeHandlersPackage" value="com.ai.paas.ipaas.i18n" />
 	</bean>
 	<mybatis:scan base-package="com.ai.paas.ipaas.**.dao" />
 
