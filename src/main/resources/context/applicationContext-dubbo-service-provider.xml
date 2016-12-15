@@ -16,7 +16,7 @@
 	</bean>
 
 	<!-- <dubbo:monitor protocol="registry" /> -->
-	<dubbo:application name="${paas.dubbo.appname}"/>
+	<dubbo:application name="${paas.dubbo.appname}"  version="${paas.dubbo.appversion}"/>
 	<dubbo:registry protocol="${paas.dubbo.registry.protocol}"
 		address="${paas.dubbo.registry.address}" file="${paas.dubbo.registry.file}" />
 	<dubbo:protocol name="${paas.dubbo.protocol}" server="${paas.dubbo.protocol.server}" port="${paas.dubbo.protocol.port}" 
