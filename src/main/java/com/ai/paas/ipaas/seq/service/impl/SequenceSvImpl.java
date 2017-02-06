@@ -77,6 +77,12 @@ public class SequenceSvImpl implements ISequenceSv {
 
 	@Override
 	public Long nextVal(String sequenceName) {
+		//每次获取到序列的当前值，步长，声明一个Map，里面存储一个原子整数
+		//存储此次的最大值，如果没有超过最大值，则原子加
+		//怎么判断超过了？   int i = count.get();
+//        while (i < 10 && !count.compareAndSet(i, i + 1)) {
+//            i = count.get();
+//        }
 		long nextval = 0;
 		List<Integer> list = sequenceMap.get(sequenceName);
 		if (list == null || list.size() == 0) {
